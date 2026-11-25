@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flower extends Model
+{
+    protected $fillable = [
+        'name',
+        'color',
+        'price_per_stem',
+        'stock_quantity',
+        'image_path',
+        'is_available',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'price_per_stem' => 'decimal:2',
+            'stock_quantity' => 'integer',
+            'is_available' => 'boolean',
+        ];
+    }
+}
