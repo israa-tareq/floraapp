@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden']) }}>
+<div {{ $attributes->merge(['class' => 'flora-card overflow-hidden']) }}>
     {{ $slot }}
 </div>

@@ -17,8 +17,7 @@ class AdminAuth
     public function handle(Request $request, Closure $next): Response
     {
         if (! $request->session()->has('admin_authenticated')) {
-            return redirect()->guest(route('admin.login'))
-                ->with('error', 'Please log in to access the administration dashboard.');
+            return redirect()->guest(route('admin.login'));
         }
 
         $response = $next($request);

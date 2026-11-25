@@ -1,74 +1,57 @@
 @extends('layouts.admin')
 
-@section('title', 'Manage Flowers')
-@section('page-heading', 'Flower Inventory')
-@section('page-subheading', 'Manage your individual flower stems, colors, prices, and stock.')
+@section('title', 'Flowers')
+@section('page-heading', 'Flowers')
 
 @section('content')
 
     <!-- Page Header -->
-    <x-page-header title="Flowers" description="Manage your individual flower inventory.">
+    <x-page-header title="Flowers">
         <x-slot:actions>
             <x-button href="{{ route('admin.flowers.create') }}" variant="primary">
-                <i class="fa-solid fa-plus mr-1.5"></i>
-                Add New Flower
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Flower</span>
             </x-button>
         </x-slot:actions>
     </x-page-header>
 
     <!-- Flowers Table Card -->
     <x-card>
-        <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-                <h2 class="text-lg font-bold text-flora-dark">
-                    All Flowers
-                </h2>
-                <p class="text-sm text-gray-400 mt-0.5">
-                    {{ $flowers->total() }} flower varieties in your inventory.
-                </p>
-            </div>
+        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex items-center justify-between gap-3">
+            <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
+                Inventory
+            </h2>
+            <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
+                {{ $flowers->total() }} {{ \Illuminate\Support\Str::plural('item', $flowers->total()) }}
+            </span>
         </div>
 
         <div class="overflow-x-auto">
             <table class="w-full text-left">
-                <thead class="bg-gray-50 border-b border-gray-100">
+                <thead class="flora-table-head">
                     <tr>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Image
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Flower Name
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Color
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Price / Stem
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Stock
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Availability
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
-                            Actions
-                        </th>
+                        <th class="px-6 py-3.5">Image</th>
+                        <th class="px-6 py-3.5">Flower Name</th>
+                        <th class="px-6 py-3.5">Color</th>
+                        <th class="px-6 py-3.5">Price / Stem</th>
+                        <th class="px-6 py-3.5">Stock</th>
+                        <th class="px-6 py-3.5">Availability</th>
+                        <th class="px-6 py-3.5 text-right">Actions</th>
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-gray-100">
+                <tbody class="flora-table-body">
                     @forelse($flowers as $flower)
-                        <tr class="hover:bg-gray-50/80 transition">
+                        <tr>
                             <!-- Image -->
                             <td class="px-6 py-4">
                                 @if($flower->image_path)
                                     <img src="{{ asset('storage/' . $flower->image_path) }}"
                                          alt="{{ $flower->name }}"
-                                         class="w-14 h-14 rounded-xl object-cover shadow-sm">
+                                         class="w-14 h-14 rounded-xl object-cover border border-[var(--flora-border-subtle)]">
                                 @else
-                                    <div class="w-14 h-14 rounded-xl bg-flora-light text-flora-muted
-                                                flex items-center justify-center text-xl">
+                                    <div class="w-14 h-14 rounded-xl bg-[var(--flora-bg-subtle)] text-[var(--flora-text-muted)]
+                                                flex items-center justify-center text-lg border border-[var(--flora-border-subtle)]">
                                         <i class="fa-solid fa-image"></i>
                                     </div>
                                 @endif
@@ -76,28 +59,28 @@
 
                             <!-- Name -->
                             <td class="px-6 py-4">
-                                <p class="text-sm font-semibold text-flora-dark">
+                                <p class="text-sm font-semibold text-[var(--flora-soldier-green)]">
                                     {{ $flower->name }}
                                 </p>
                             </td>
 
                             <!-- Color -->
                             <td class="px-6 py-4">
-                                <span class="text-sm text-gray-600">
+                                <span class="text-sm text-[var(--flora-text-body)]">
                                     {{ $flower->color }}
                                 </span>
                             </td>
 
                             <!-- Price -->
                             <td class="px-6 py-4">
-                                <span class="text-sm font-medium text-flora-dark">
+                                <span class="text-sm font-semibold text-[var(--flora-soldier-green)]">
                                     ${{ number_format((float) $flower->price_per_stem, 2) }}
                                 </span>
                             </td>
 
                             <!-- Stock -->
                             <td class="px-6 py-4">
-                                <span class="text-sm font-semibold {{ $flower->stock_quantity < 10 ? 'text-red-600' : 'text-gray-700' }}">
+                                <span class="text-sm font-semibold {{ $flower->stock_quantity < 10 ? 'text-[var(--flora-status-danger-text)]' : 'text-[var(--flora-soldier-green)]' }}">
                                     {{ $flower->stock_quantity }}
                                 </span>
                             </td>
@@ -106,22 +89,24 @@
                             <td class="px-6 py-4">
                                 @if($flower->is_available)
                                     <x-badge variant="success">
-                                        Available
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span>Available</span>
                                     </x-badge>
                                 @else
                                     <x-badge variant="neutral">
-                                        Unavailable
+                                        <i class="fa-solid fa-circle-minus"></i>
+                                        <span>Unavailable</span>
                                     </x-badge>
                                 @endif
                             </td>
 
                             <!-- Actions -->
                             <td class="px-6 py-4 text-right">
-                                <div class="flex items-center justify-end gap-3">
+                                <div class="flex items-center justify-end gap-4">
                                     <a href="{{ route('admin.flowers.edit', $flower) }}"
-                                       class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition">
-                                        <i class="fa-solid fa-pen-to-square mr-1"></i>
-                                        Edit
+                                       class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--flora-soldier-green)] hover:text-[var(--flora-usukoubai)] transition">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <span>Edit</span>
                                     </a>
 
                                     <form action="{{ route('admin.flowers.destroy', $flower) }}"
@@ -131,9 +116,9 @@
                                         @method('DELETE')
 
                                         <button type="submit"
-                                                class="inline-flex items-center text-sm font-semibold text-red-600 hover:text-red-800 transition">
-                                            <i class="fa-solid fa-trash-can mr-1"></i>
-                                            Delete
+                                                class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--flora-status-danger-text)] hover:text-[var(--flora-usukoubai)] transition">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            <span>Delete</span>
                                         </button>
                                     </form>
                                 </div>
@@ -144,12 +129,11 @@
                             <td colspan="7">
                                 <x-empty-state
                                     icon="fa-seedling"
-                                    title="No flowers found"
-                                    description="Start by adding your first flower variety to the inventory.">
+                                    title="No flowers found">
                                     <x-slot:action>
                                         <x-button href="{{ route('admin.flowers.create') }}" variant="primary">
-                                            <i class="fa-solid fa-plus mr-1.5"></i>
-                                            Add First Flower
+                                            <i class="fa-solid fa-plus"></i>
+                                            <span>Add Flower</span>
                                         </x-button>
                                     </x-slot:action>
                                 </x-empty-state>
@@ -162,7 +146,7 @@
 
         <!-- Pagination -->
         @if($flowers->hasPages())
-            <div class="p-6 border-t border-gray-100 bg-gray-50/40">
+            <div class="p-5 border-t border-[var(--flora-border-subtle)] bg-[var(--flora-bg-surface)]">
                 {{ $flowers->links() }}
             </div>
         @endif

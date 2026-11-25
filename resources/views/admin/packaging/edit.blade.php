@@ -1,24 +1,20 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Packaging')
+@section('title', 'Edit Packaging Option')
 @section('page-heading', 'Edit Packaging Option')
-@section('page-subheading', 'Update the details and stock for ' . $packaging->name)
 
 @section('content')
 
     <div class="mb-6">
         <a href="{{ route('admin.packaging.index') }}"
-           class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-flora-dark transition">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Packaging Options
+           class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--flora-text-muted)] hover:text-[var(--flora-soldier-green)] transition">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Packaging Options</span>
         </a>
 
-        <h1 class="text-2xl font-bold text-flora-dark mt-3 tracking-tight">
+        <h1 class="text-2xl font-bold text-[var(--flora-soldier-green)] mt-3 tracking-tight">
             Edit Packaging Option: {{ $packaging->name }}
         </h1>
-        <p class="text-sm text-gray-500 mt-1">
-            Update the information for this packaging option.
-        </p>
     </div>
 
     <x-card class="p-6 sm:p-8 max-w-3xl">
@@ -31,58 +27,58 @@
 
             <!-- Type -->
             <div>
-                <label for="type" class="block text-sm font-semibold text-flora-dark mb-2">
-                    Packaging Type <span class="text-red-500">*</span>
+                <label for="type" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                    Packaging Type <span class="text-[var(--flora-usukoubai)]">*</span>
                 </label>
                 <select id="type"
                         name="type"
                         required
-                        class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-flora-pink">
+                        class="flora-input @error('type') flora-input-error @enderror">
                     <option value="wrap" {{ old('type', $packaging->type) == 'wrap' ? 'selected' : '' }}>Wrapping Paper</option>
                     <option value="ribbon" {{ old('type', $packaging->type) == 'ribbon' ? 'selected' : '' }}>Ribbon</option>
                     <option value="box" {{ old('type', $packaging->type) == 'box' ? 'selected' : '' }}>Gift Box</option>
                 </select>
                 @error('type')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Item Name -->
             <div>
-                <label for="name" class="block text-sm font-semibold text-flora-dark mb-2">
-                    Item Name <span class="text-red-500">*</span>
+                <label for="name" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                    Item Name <span class="text-[var(--flora-usukoubai)]">*</span>
                 </label>
                 <input type="text"
                        id="name"
                        name="name"
                        value="{{ old('name', $packaging->name) }}"
                        required
-                       class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-flora-pink">
+                       class="flora-input @error('name') flora-input-error @enderror">
                 @error('name')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Color and Price -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                    <label for="color" class="block text-sm font-semibold text-flora-dark mb-2">
-                        Color <span class="text-red-500">*</span>
+                    <label for="color" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                        Color <span class="text-[var(--flora-usukoubai)]">*</span>
                     </label>
                     <input type="text"
                            id="color"
                            name="color"
                            value="{{ old('color', $packaging->color) }}"
                            required
-                           class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-flora-pink">
+                           class="flora-input @error('color') flora-input-error @enderror">
                     @error('color')
-                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                        <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="price" class="block text-sm font-semibold text-flora-dark mb-2">
-                        Price <span class="text-red-500">*</span>
+                    <label for="price" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                        Price <span class="text-[var(--flora-usukoubai)]">*</span>
                     </label>
                     <input type="number"
                            id="price"
@@ -91,17 +87,17 @@
                            min="0"
                            step="0.01"
                            required
-                           class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-flora-pink">
+                           class="flora-input @error('price') flora-input-error @enderror">
                     @error('price')
-                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                        <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <!-- Stock Quantity -->
             <div>
-                <label for="stock_quantity" class="block text-sm font-semibold text-flora-dark mb-2">
-                    Stock Quantity <span class="text-red-500">*</span>
+                <label for="stock_quantity" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                    Stock Quantity <span class="text-[var(--flora-usukoubai)]">*</span>
                 </label>
                 <input type="number"
                        id="stock_quantity"
@@ -109,15 +105,15 @@
                        value="{{ old('stock_quantity', $packaging->stock_quantity) }}"
                        min="0"
                        required
-                       class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-flora-pink">
+                       class="flora-input @error('stock_quantity') flora-input-error @enderror">
                 @error('stock_quantity')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Current Image & Replacement -->
             <div>
-                <label class="block text-sm font-semibold text-flora-dark mb-2">
+                <label class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
                     Current Image
                 </label>
 
@@ -125,36 +121,36 @@
                     @if($packaging->image_path)
                         <img src="{{ asset('storage/' . $packaging->image_path) }}"
                              alt="{{ $packaging->name }}"
-                             class="w-28 h-28 rounded-2xl object-cover shadow-sm border border-gray-100">
+                             class="w-28 h-28 rounded-2xl object-cover border border-[var(--flora-border-subtle)]">
                     @else
-                        <div class="w-28 h-28 rounded-2xl bg-flora-light text-flora-muted
-                                    flex items-center justify-center text-3xl border border-gray-100">
+                        <div class="w-28 h-28 rounded-2xl bg-[var(--flora-bg-subtle)] text-[var(--flora-text-muted)]
+                                    flex items-center justify-center text-3xl border border-[var(--flora-border-subtle)]">
                             <i class="fa-solid fa-box"></i>
                         </div>
                     @endif
                 </div>
 
-                <label for="image" class="block text-sm font-semibold text-flora-dark mb-2">
-                    Choose Replacement Image (Optional)
+                <label for="image" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                    Replace Image (Optional)
                 </label>
                 <input type="file"
                        id="image"
                        name="image"
                        accept=".jpg,.jpeg,.png,.webp"
-                       class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm">
-                <p class="text-xs text-gray-400 mt-1.5">
-                    Leave empty to keep current image. Maximum size: 2 MB.
+                       class="flora-file-input">
+                <p class="text-xs text-[var(--flora-text-muted)] mt-1.5">
+                    Leave blank to keep current image. JPG, JPEG, PNG, or WebP (max 2 MB)
                 </p>
                 @error('image')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-[var(--flora-status-danger-text)] mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Buttons -->
-            <div class="flex items-center gap-3 pt-6 border-t border-gray-100">
+            <div class="flex items-center gap-3 pt-6 border-t border-[var(--flora-border-subtle)]">
                 <x-button type="submit" variant="primary">
-                    <i class="fa-solid fa-floppy-disk mr-1.5"></i>
-                    Update Packaging Option
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Update Packaging Option</span>
                 </x-button>
 
                 <x-button href="{{ route('admin.packaging.index') }}" variant="secondary">

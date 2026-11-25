@@ -1,19 +1,11 @@
 @props([
     'title',
-    'description' => null,
 ])
 
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-    <div>
-        <h1 class="text-2xl font-bold text-flora-dark tracking-tight">
-            {{ $title }}
-        </h1>
-        @if($description)
-            <p class="text-sm text-gray-500 mt-1">
-                {{ $description }}
-            </p>
-        @endif
-    </div>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <h1 class="text-2xl font-bold text-[var(--flora-soldier-green)] tracking-tight">
+        {{ $title }}
+    </h1>
 
     @if(isset($actions))
         <div class="flex items-center gap-3">

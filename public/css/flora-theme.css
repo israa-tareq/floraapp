@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Flora App — Visual Identity & Design System Tokens
+   ========================================================================== */
+
+:root {
+    /* Core Brand Palette */
+    --flora-warm-fog: #DDD3C9;
+    --flora-berry-good: #ECC4C3;
+    --flora-usukoubai: #B97D7B;
+    --flora-meadow-mauve: #928E5E;
+    --flora-soldier-green: #575527;
+
+    /* Semantic Surface & Contrast Tokens derived from the core palette */
+    --flora-bg-canvas: var(--flora-warm-fog);
+    --flora-bg-surface: #F7F3EE;
+    --flora-bg-surface-elevated: #FAF7F3;
+    --flora-bg-subtle: #EFE8E0;
+    --flora-bg-highlight: rgba(236, 196, 195, 0.35);
+
+    --flora-text-primary: var(--flora-soldier-green);
+    --flora-text-body: #444222;
+    --flora-text-muted: #6E6B47;
+    --flora-text-on-accent: #FAF7F3;
+
+    --flora-border-subtle: rgba(87, 85, 39, 0.16);
+    --flora-border-strong: rgba(87, 85, 39, 0.30);
+
+    --flora-accent-primary: var(--flora-usukoubai);
+    --flora-accent-primary-hover: #A36765;
+    --flora-accent-secondary: var(--flora-meadow-mauve);
+    --flora-accent-soft: var(--flora-berry-good);
+
+    /* Status Tokens (aligned with botanical palette + accessible contrast) */
+    --flora-status-success-bg: rgba(146, 142, 94, 0.16);
+    --flora-status-success-border: rgba(87, 85, 39, 0.30);
+    --flora-status-success-text: var(--flora-soldier-green);
+
+    --flora-status-warning-bg: rgba(236, 196, 195, 0.42);
+    --flora-status-warning-border: rgba(185, 125, 123, 0.45);
+    --flora-status-warning-text: #6E3A38;
+
+    --flora-status-danger-bg: rgba(185, 125, 123, 0.20);
+    --flora-status-danger-border: rgba(163, 103, 101, 0.45);
+    --flora-status-danger-text: #6B2D2B;
+
+    /* Typography */
+    --flora-font-family: 'Lora', Georgia, 'Times New Roman', serif;
+
+    /* Elevation & Radii */
+    --flora-shadow-card: 0 2px 10px rgba(87, 85, 39, 0.06);
+    --flora-shadow-elevated: 0 18px 40px rgba(87, 85, 39, 0.16);
+    --flora-focus-ring: 0 0 0 3px rgba(185, 125, 123, 0.35);
+}
+
+/* Consistent Typography Across All Controls */
+html,
+body,
+button,
+input,
+select,
+textarea,
+table,
+th,
+td,
+label,
+a {
+    font-family: var(--flora-font-family);
+}
+
+body {
+    background-color: var(--flora-bg-canvas);
+    color: var(--flora-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+/* Visible Keyboard Focus State (Accessibility) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--flora-accent-primary);
+    outline-offset: 2px;
+}
+
+/* Shared Surface & Card Styling */
+.flora-card {
+    background-color: var(--flora-bg-surface-elevated);
+    border: 1px solid var(--flora-border-subtle);
+    box-shadow: var(--flora-shadow-card);
+    border-radius: 1rem;
+}
+
+/* Shared Sidebar Navigation */
+.flora-sidebar {
+    background-color: var(--flora-bg-surface);
+    border-right: 1px solid var(--flora-border-subtle);
+}
+
+.flora-topbar {
+    background-color: var(--flora-bg-surface);
+    border-bottom: 1px solid var(--flora-border-subtle);
+}
+
+.flora-footer {
+    background-color: var(--flora-bg-surface);
+    border-top: 1px solid var(--flora-border-subtle);
+    color: var(--flora-text-muted);
+}
+
+.sidebar-link {
+    color: var(--flora-text-muted);
+    border-left: 3px solid transparent;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(236, 196, 195, 0.35);
+    color: var(--flora-soldier-green);
+}
+
+.sidebar-link.active {
+    background-color: rgba(236, 196, 195, 0.65);
+    border-left-color: var(--flora-usukoubai);
+    color: var(--flora-soldier-green);
+    font-weight: 600;
+}
+
+.sidebar-link.active i {
+    color: var(--flora-soldier-green);
+}
+
+/* Shared Form Controls */
+.flora-input {
+    width: 100%;
+    background-color: #FFFDFB;
+    color: var(--flora-text-primary);
+    border: 1px solid var(--flora-border-strong);
+    border-radius: 0.75rem;
+    padding: 0.7rem 0.95rem;
+    font-size: 0.925rem;
+    line-height: 1.45;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.flora-input::placeholder {
+    color: rgba(110, 107, 71, 0.65);
+}
+
+.flora-input:focus {
+    outline: none;
+    border-color: var(--flora-usukoubai);
+    box-shadow: var(--flora-focus-ring);
+}
+
+.flora-input-error {
+    border-color: var(--flora-accent-primary-hover);
+    box-shadow: 0 0 0 3px rgba(185, 125, 123, 0.25);
+}
+
+.flora-input-with-icon {
+    padding-left: 2.65rem;
+}
+
+.flora-input-with-toggle {
+    padding-right: 2.75rem;
+}
+
+.flora-file-input {
+    width: 100%;
+    background-color: #FFFDFB;
+    color: var(--flora-text-primary);
+    border: 1px dashed var(--flora-border-strong);
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.95rem;
+    font-size: 0.875rem;
+    transition: border-color 0.18s ease;
+}
+
+.flora-file-input:hover {
+    border-color: var(--flora-usukoubai);
+}
+
+.flora-file-input::file-selector-button {
+    background-color: var(--flora-berry-good);
+    color: var(--flora-soldier-green);
+    border: 1px solid var(--flora-border-subtle);
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    margin-right: 0.85rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.flora-file-input::file-selector-button:hover {
+    background-color: var(--flora-usukoubai);
+    color: var(--flora-text-on-accent);
+}
+
+/* Shared Table Styling */
+.flora-table-head {
+    background-color: var(--flora-bg-subtle);
+    border-bottom: 1px solid var(--flora-border-subtle);
+}
+
+.flora-table-head th {
+    color: var(--flora-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.flora-table-body tr {
+    border-bottom: 1px solid var(--flora-border-subtle);
+    transition: background-color 0.15s ease;
+}
+
+.flora-table-body tr:last-child {
+    border-bottom: 0;
+}
+
+.flora-table-body tr:hover {
+    background-color: rgba(236, 196, 195, 0.16);
+}
+
+/* Transparent PNG Logo */
+.flora-app-logo {
+    background: transparent;
+    display: block;
+    object-fit: contain;
+}
+
+/* Login Full-Screen Blurred Background */
+.flora-login-bg-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.flora-login-bg-image {
+    position: absolute;
+    inset: -24px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(10px);
+    transform: scale(1.06);
+}
+
+.flora-login-bg-placeholder {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 22%, rgba(236, 196, 195, 0.72), transparent 52%),
+        radial-gradient(circle at 82% 78%, rgba(146, 142, 94, 0.34), transparent 55%),
+        radial-gradient(circle at 50% 45%, rgba(185, 125, 123, 0.22), transparent 60%),
+        var(--flora-warm-fog);
+}
+
+.flora-login-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        145deg,
+        rgba(221, 211, 201, 0.56) 0%,
+        rgba(87, 85, 39, 0.24) 100%
+    );
+}
+
+.flora-login-card {
+    background-color: rgba(250, 247, 243, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(87, 85, 39, 0.18);
+    box-shadow: var(--flora-shadow-elevated);
+    border-radius: 1.25rem;
+}
+
+.main-content {
+    min-width: 0;
+}

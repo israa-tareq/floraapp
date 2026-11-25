@@ -2,77 +2,62 @@
 
 @section('title', 'Packaging Options')
 @section('page-heading', 'Packaging Options')
-@section('page-subheading', 'Manage wrapping paper, ribbons, and gift boxes.')
 
 @section('content')
 
     <!-- Page Header -->
-    <x-page-header title="Packaging Options" description="Manage wrapping paper, ribbons, and gift boxes.">
+    <x-page-header title="Packaging Options">
         <x-slot:actions>
             <x-button href="{{ route('admin.packaging.create') }}" variant="primary">
-                <i class="fa-solid fa-plus mr-1.5"></i>
-                Add Packaging Option
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Packaging Option</span>
             </x-button>
         </x-slot:actions>
     </x-page-header>
 
     <!-- Packaging Options Card -->
     <x-card>
-        <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-                <h2 class="text-lg font-bold text-flora-dark">
-                    All Packaging Options
-                </h2>
-                <p class="text-sm text-gray-400 mt-0.5">
-                    {{ $packagingOptions->total() }} option(s) in catalog.
-                </p>
-            </div>
+        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex items-center justify-between gap-3">
+            <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
+                Inventory
+            </h2>
+            <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
+                {{ $packagingOptions->total() }} {{ \Illuminate\Support\Str::plural('item', $packagingOptions->total()) }}
+            </span>
         </div>
 
         @if($packagingOptions->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-gray-50 border-b border-gray-100">
+                    <thead class="flora-table-head">
                         <tr>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                Item
-                            </th>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                Type
-                            </th>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                Color
-                            </th>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                Price
-                            </th>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                Stock
-                            </th>
-                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
-                                Actions
-                            </th>
+                            <th class="px-6 py-3.5">Item</th>
+                            <th class="px-6 py-3.5">Type</th>
+                            <th class="px-6 py-3.5">Color</th>
+                            <th class="px-6 py-3.5">Price</th>
+                            <th class="px-6 py-3.5">Stock</th>
+                            <th class="px-6 py-3.5 text-right">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-gray-100">
+                    <tbody class="flora-table-body">
                         @foreach($packagingOptions as $packaging)
-                            <tr class="hover:bg-gray-50/80 transition">
+                            <tr>
                                 <!-- Item Info -->
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         @if($packaging->image_path)
                                             <img src="{{ asset('storage/' . $packaging->image_path) }}"
                                                  alt="{{ $packaging->name }}"
-                                                 class="w-14 h-14 rounded-xl object-cover shadow-sm">
+                                                 class="w-14 h-14 rounded-xl object-cover border border-[var(--flora-border-subtle)] shrink-0">
                                         @else
-                                            <div class="w-14 h-14 rounded-xl bg-flora-light text-flora-muted
-                                                        flex items-center justify-center text-xl">
+                                            <div class="w-14 h-14 rounded-xl bg-[var(--flora-bg-subtle)] text-[var(--flora-text-muted)]
+                                                        flex items-center justify-center text-lg border border-[var(--flora-border-subtle)] shrink-0">
                                                 <i class="fa-solid fa-box"></i>
                                             </div>
                                         @endif
 
-                                        <span class="text-sm font-semibold text-flora-dark">
+                                        <span class="text-sm font-semibold text-[var(--flora-soldier-green)]">
                                             {{ $packaging->name }}
                                         </span>
                                     </div>
@@ -86,29 +71,29 @@
                                 </td>
 
                                 <!-- Color -->
-                                <td class="px-6 py-4 text-sm text-gray-600">
+                                <td class="px-6 py-4 text-sm text-[var(--flora-text-body)]">
                                     {{ $packaging->color }}
                                 </td>
 
                                 <!-- Price -->
-                                <td class="px-6 py-4 text-sm font-medium text-flora-dark">
+                                <td class="px-6 py-4 text-sm font-semibold text-[var(--flora-soldier-green)]">
                                     ${{ number_format($packaging->price, 2) }}
                                 </td>
 
                                 <!-- Stock -->
                                 <td class="px-6 py-4">
-                                    <span class="text-sm font-semibold {{ $packaging->stock_quantity < 10 ? 'text-red-600' : 'text-gray-700' }}">
+                                    <span class="text-sm font-semibold {{ $packaging->stock_quantity < 10 ? 'text-[var(--flora-status-danger-text)]' : 'text-[var(--flora-soldier-green)]' }}">
                                         {{ $packaging->stock_quantity }}
                                     </span>
                                 </td>
 
                                 <!-- Actions -->
                                 <td class="px-6 py-4 text-right">
-                                    <div class="flex items-center justify-end gap-3">
+                                    <div class="flex items-center justify-end gap-4">
                                         <a href="{{ route('admin.packaging.edit', $packaging) }}"
-                                           class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition">
-                                            <i class="fa-solid fa-pen-to-square mr-1"></i>
-                                            Edit
+                                           class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--flora-soldier-green)] hover:text-[var(--flora-usukoubai)] transition">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>Edit</span>
                                         </a>
 
                                         <form action="{{ route('admin.packaging.destroy', $packaging) }}"
@@ -118,9 +103,9 @@
                                             @method('DELETE')
 
                                             <button type="submit"
-                                                    class="inline-flex items-center text-sm font-semibold text-red-600 hover:text-red-800 transition">
-                                                <i class="fa-solid fa-trash-can mr-1"></i>
-                                                Delete
+                                                    class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--flora-status-danger-text)] hover:text-[var(--flora-usukoubai)] transition">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                                <span>Delete</span>
                                             </button>
                                         </form>
                                     </div>
@@ -133,19 +118,18 @@
 
             <!-- Pagination -->
             @if($packagingOptions->hasPages())
-                <div class="p-6 border-t border-gray-100 bg-gray-50/40">
+                <div class="p-5 border-t border-[var(--flora-border-subtle)] bg-[var(--flora-bg-surface)]">
                     {{ $packagingOptions->links() }}
                 </div>
             @endif
         @else
             <x-empty-state
                 icon="fa-box-open"
-                title="No packaging options yet"
-                description="Add your first packaging option (wrapping paper, ribbons, or gift boxes).">
+                title="No packaging options found">
                 <x-slot:action>
                     <x-button href="{{ route('admin.packaging.create') }}" variant="primary">
-                        <i class="fa-solid fa-plus mr-1.5"></i>
-                        Add First Option
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Packaging Option</span>
                     </x-button>
                 </x-slot:action>
             </x-empty-state>

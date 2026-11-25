@@ -84,8 +84,7 @@ class AuthController extends Controller
         ]);
 
         // 10. Redirect to intended protected page or default dashboard
-        return redirect()->intended(route('admin.dashboard'))
-            ->with('success', "Welcome back, {$expectedUsername}!");
+        return redirect()->intended(route('admin.dashboard'));
     }
 
     /**
