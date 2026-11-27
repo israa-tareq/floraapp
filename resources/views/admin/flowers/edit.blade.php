@@ -1,20 +1,16 @@
 @extends('layouts.admin')
 
 @section('title', 'Edit Flower')
-@section('page-heading', 'Edit Flower')
+@section('page-heading', 'Edit Flower: ' . $flower->name)
 
 @section('content')
 
-    <div class="mb-6">
+    <div class="mb-5">
         <a href="{{ route('admin.flowers.index') }}"
            class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--flora-text-muted)] hover:text-[var(--flora-soldier-green)] transition">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Back to Flowers</span>
         </a>
-
-        <h1 class="text-2xl font-bold text-[var(--flora-soldier-green)] mt-3 tracking-tight">
-            Edit Flower: {{ $flower->name }}
-        </h1>
     </div>
 
     <x-card class="p-6 md:p-8 max-w-3xl">

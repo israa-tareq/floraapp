@@ -1,20 +1,16 @@
 @extends('layouts.admin')
 
 @section('title', 'Edit Bouquet')
-@section('page-heading', 'Edit Bouquet')
+@section('page-heading', 'Edit Bouquet: ' . $bouquet->name)
 
 @section('content')
 
-    <div class="mb-6">
+    <div class="mb-5">
         <a href="{{ route('admin.bouquets.index') }}"
            class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--flora-text-muted)] hover:text-[var(--flora-soldier-green)] transition">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Back to Pre-Made Bouquets</span>
         </a>
-
-        <h1 class="text-2xl font-bold text-[var(--flora-soldier-green)] mt-3 tracking-tight">
-            Edit Bouquet: {{ $bouquet->name }}
-        </h1>
     </div>
 
     <x-card class="p-6 sm:p-8 max-w-3xl">

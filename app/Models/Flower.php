@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Flower extends Model
 {
@@ -22,5 +23,13 @@ class Flower extends Model
             'stock_quantity' => 'integer',
             'is_available' => 'boolean',
         ];
+    }
+
+    /**
+     * Sale line items referencing this flower.
+     */
+    public function saleItems(): HasMany
+    {
+        return $this->hasMany(SaleItem::class);
     }
 }

@@ -4,42 +4,24 @@
 
 @section('content')
 
-    <!-- Login Card -->
+    <!-- Frosted Glass Login Card -->
     <div class="flora-login-card p-6 sm:p-8">
 
-        <!-- Application Brand Header -->
-        <div class="text-center mb-7">
-            <x-app-logo size="lg" class="mx-auto mb-3" />
+        <!-- Application Brand Header (Noticeably Larger Transparent Logo) -->
+        <div class="text-center mb-6">
+            <x-app-logo size="xl" class="mx-auto mb-3" />
 
             <h1 class="text-2xl font-bold text-[var(--flora-soldier-green)] tracking-tight">
                 Flora
             </h1>
         </div>
 
-        <!-- Flash Success Notification (e.g. after logout) -->
-        @if(session('success'))
-            <div class="mb-5 bg-[var(--flora-status-success-bg)] border border-[var(--flora-status-success-border)] text-[var(--flora-status-success-text)] px-4 py-3 rounded-xl flex items-center gap-3 text-sm"
-                 role="status">
-                <i class="fa-solid fa-circle-check text-base shrink-0"></i>
-                <p class="font-medium">{{ session('success') }}</p>
-            </div>
-        @endif
-
-        <!-- Flash Error Notification -->
-        @if(session('error'))
-            <div class="mb-5 bg-[var(--flora-status-danger-bg)] border border-[var(--flora-status-danger-border)] text-[var(--flora-status-danger-text)] px-4 py-3 rounded-xl flex items-center gap-3 text-sm"
-                 role="alert">
-                <i class="fa-solid fa-circle-exclamation text-base shrink-0"></i>
-                <p class="font-medium">{{ session('error') }}</p>
-            </div>
-        @endif
-
-        <form action="{{ route('admin.login.submit') }}" method="POST" novalidate class="space-y-5">
+        <form action="{{ route('admin.login.submit') }}" method="POST" novalidate class="space-y-4">
             @csrf
 
             <!-- Username Field -->
             <div>
-                <label for="username" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                <label for="username" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-1.5">
                     Username
                 </label>
                 <div class="relative">
@@ -66,7 +48,7 @@
 
             <!-- Password Field -->
             <div>
-                <label for="password" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-2">
+                <label for="password" class="block text-sm font-semibold text-[var(--flora-soldier-green)] mb-1.5">
                     Password
                 </label>
                 <div class="relative">
@@ -99,11 +81,58 @@
             </div>
 
             <!-- Submit Button -->
-            <x-button type="submit" variant="primary" class="w-full py-3">
+            <x-button type="submit" variant="primary" class="w-full py-3 mt-1">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 <span>Log In</span>
             </x-button>
         </form>
+
+        <!-- Visual Placeholders Underneath Existing Login Form (Ready for Future Integration) -->
+        <div class="mt-5 pt-5 border-t border-[var(--flora-border-subtle)] space-y-4">
+
+            <!-- Simple CAPTCHA-Style Visual Checkbox Placeholder -->
+            <label for="captcha_placeholder"
+                   class="flora-captcha-box px-4 py-3 flex items-center justify-between gap-3 cursor-pointer">
+                <span class="flex items-center gap-3">
+                    <input type="checkbox"
+                           id="captcha_placeholder"
+                           class="w-4 h-4 rounded accent-[var(--flora-usukoubai)]">
+                    <span class="text-sm font-medium text-[var(--flora-soldier-green)]">
+                        I'm not a robot
+                    </span>
+                </span>
+                <span class="text-[var(--flora-text-muted)] text-base" aria-hidden="true">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+            </label>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-3">
+                <span class="flex-1 h-px bg-[var(--flora-border-subtle)]"></span>
+                <span class="text-xs font-semibold uppercase tracking-wider text-[var(--flora-text-muted)]">or</span>
+                <span class="flex-1 h-px bg-[var(--flora-border-subtle)]"></span>
+            </div>
+
+            <!-- Google Sign-In Visual Placeholder Button -->
+            <button type="button"
+                    data-placeholder-auth="google"
+                    onclick="notifyPlaceholder('Google sign-in is not connected yet.')"
+                    class="flora-oauth-btn w-full inline-flex items-center justify-center gap-2.5 px-4 py-2.5 text-sm font-semibold">
+                <i class="fa-brands fa-google text-base"></i>
+                <span>Continue with Google</span>
+            </button>
+
+            <!-- Sign Up Visual Placeholder Link -->
+            <p class="text-center text-sm text-[var(--flora-text-body)] pt-1">
+                Don't have an account?
+                <a href="#signup"
+                   data-placeholder-auth="signup"
+                   onclick="event.preventDefault(); notifyPlaceholder('Account sign-up is not enabled yet.');"
+                   class="font-semibold text-[var(--flora-soldier-green)] underline decoration-[var(--flora-usukoubai)] underline-offset-4 hover:text-[var(--flora-usukoubai)] transition ml-1">
+                    Sign up
+                </a>
+            </p>
+        </div>
 
     </div>
 
@@ -123,6 +152,12 @@
             passwordInput.type = 'password';
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
+        }
+    }
+
+    function notifyPlaceholder(message) {
+        if (window.FloraToast) {
+            window.FloraToast.show(message, 'warning');
         }
     }
 </script>

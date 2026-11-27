@@ -8,14 +8,16 @@ $logoRelativePath = 'images/flora-logo.png';
 $hasCustomLogo = file_exists(public_path($logoRelativePath));
 
 $imageSizeClasses = match ($size) {
-    'sm' => 'h-8 w-auto max-w-[120px]',
+    'sm' => 'h-9 w-auto max-w-[44px]',
     'lg' => 'h-16 w-auto max-w-[220px]',
-    default => 'h-10 w-auto max-w-[150px]',
+    'xl' => 'h-24 sm:h-28 w-auto max-w-[280px]',
+    default => 'h-11 w-auto max-w-[150px]',
 };
 
 $iconSizeClasses = match ($size) {
     'sm' => 'text-xl',
     'lg' => 'text-4xl',
+    'xl' => 'text-5xl',
     default => 'text-2xl',
 };
 @endphp

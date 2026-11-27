@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PreMadeBouquet extends Model
 {
@@ -22,5 +23,13 @@ class PreMadeBouquet extends Model
             'stock_quantity' => 'integer',
             'is_featured' => 'boolean',
         ];
+    }
+
+    /**
+     * Sale line items referencing this bouquet.
+     */
+    public function saleItems(): HasMany
+    {
+        return $this->hasMany(SaleItem::class);
     }
 }

@@ -14,202 +14,187 @@
 
     <div class="min-h-screen flex">
 
-        <!-- ================= SIDEBAR ================= -->
-        <aside class="w-64 flora-sidebar flex flex-col
-                      fixed inset-y-0 left-0 z-40
-                      transform -translate-x-full transition-transform duration-200
-                      lg:translate-x-0"
+        <!-- ================= COLLAPSIBLE SIDEBAR ================= -->
+        <aside class="flora-sidebar sticky top-0 h-screen shrink-0 flex flex-col z-30"
                id="sidebar"
                aria-label="Admin navigation">
 
             <!-- Brand Logo -->
-            <div class="px-6 py-6 border-b border-[var(--flora-border-subtle)]">
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <x-app-logo size="md" />
-                    <span class="text-xl font-bold text-[var(--flora-soldier-green)] tracking-tight">
+            <div class="sidebar-brand-wrap px-6 py-5 border-b border-[var(--flora-border-subtle)] flex items-center">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 min-w-0">
+                    <x-app-logo size="md" class="shrink-0" />
+                    <span class="sidebar-brand-text text-xl font-bold text-[var(--flora-soldier-green)] tracking-tight">
                         Flora
                     </span>
                 </a>
             </div>
 
             <!-- Navigation Links -->
-            <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-                <p class="text-xs font-semibold text-[var(--flora-text-muted)] uppercase tracking-wider px-3 mb-3">
+            <nav class="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto">
+                <p class="sidebar-section-title text-xs font-semibold text-[var(--flora-text-muted)] uppercase tracking-wider px-3 mb-3">
                     Menu
                 </p>
 
                 <!-- Dashboard -->
                 <a href="{{ route('admin.dashboard') }}"
+                   data-tooltip="Dashboard"
+                   title="Dashboard"
+                   aria-label="Dashboard"
                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm
                           {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="fa-solid fa-chart-line text-base w-5 text-center"></i>
-                    <span>Dashboard</span>
+                    <i class="fa-solid fa-chart-line text-base w-5 text-center shrink-0"></i>
+                    <span class="sidebar-label">Dashboard</span>
+                </a>
+
+                <!-- Sales -->
+                <a href="{{ route('admin.sales.index') }}"
+                   data-tooltip="Sales"
+                   title="Sales"
+                   aria-label="Sales"
+                   class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm
+                          {{ request()->routeIs('admin.sales.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-receipt text-base w-5 text-center shrink-0"></i>
+                    <span class="sidebar-label">Sales</span>
                 </a>
 
                 <!-- Flowers -->
                 <a href="{{ route('admin.flowers.index') }}"
+                   data-tooltip="Flowers"
+                   title="Flowers"
+                   aria-label="Flowers"
                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm
                           {{ request()->routeIs('admin.flowers.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-seedling text-base w-5 text-center"></i>
-                    <span>Flowers</span>
+                    <i class="fa-solid fa-seedling text-base w-5 text-center shrink-0"></i>
+                    <span class="sidebar-label">Flowers</span>
                 </a>
 
-                <!-- Bouquets -->
+                <!-- Pre-Made Bouquets -->
                 <a href="{{ route('admin.bouquets.index') }}"
+                   data-tooltip="Pre-Made Bouquets"
+                   title="Pre-Made Bouquets"
+                   aria-label="Pre-Made Bouquets"
                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm
                           {{ request()->routeIs('admin.bouquets.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-wand-magic-sparkles text-base w-5 text-center"></i>
-                    <span>Pre-Made Bouquets</span>
+                    <i class="fa-solid fa-wand-magic-sparkles text-base w-5 text-center shrink-0"></i>
+                    <span class="sidebar-label">Pre-Made Bouquets</span>
                 </a>
 
                 <!-- Packaging Options -->
                 <a href="{{ route('admin.packaging.index') }}"
+                   data-tooltip="Packaging Options"
+                   title="Packaging Options"
+                   aria-label="Packaging Options"
                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm
                           {{ request()->routeIs('admin.packaging.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-box-open text-base w-5 text-center"></i>
-                    <span>Packaging Options</span>
+                    <i class="fa-solid fa-box-open text-base w-5 text-center shrink-0"></i>
+                    <span class="sidebar-label">Packaging Options</span>
                 </a>
             </nav>
 
-            <!-- Sidebar Footer -->
-            <div class="px-6 py-5 border-t border-[var(--flora-border-subtle)] flex items-center justify-between gap-2">
-                <div class="min-w-0">
+            <!-- Sidebar Footer (Admin Identity Only — Logout is in Header) -->
+            <div class="sidebar-footer-wrap px-5 py-4 border-t border-[var(--flora-border-subtle)] flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-[var(--flora-berry-good)]/65 text-[var(--flora-soldier-green)] border border-[var(--flora-border-subtle)] flex items-center justify-center text-sm shrink-0">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="sidebar-user-meta min-w-0">
                     <p class="text-xs font-semibold text-[var(--flora-soldier-green)] truncate">
                         {{ session('admin_username', 'Administrator') }}
                     </p>
-                    <p class="text-xs text-[var(--flora-text-muted)] mt-0.5">
+                    <p class="text-xs text-[var(--flora-text-muted)]">
                         Administrator
                     </p>
                 </div>
-
-                <form action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit"
-                            class="text-[var(--flora-text-muted)] hover:text-[var(--flora-status-danger-text)] p-2 rounded-xl hover:bg-[var(--flora-status-danger-bg)] transition"
-                            title="Log Out"
-                            aria-label="Log Out">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </form>
             </div>
         </aside>
 
-        <!-- ================= MOBILE SIDEBAR OVERLAY ================= -->
-        <div id="sidebarOverlay"
-             class="fixed inset-0 bg-[var(--flora-soldier-green)]/30 backdrop-blur-[1px] z-30 hidden lg:hidden"
-             onclick="toggleSidebar()">
-        </div>
+        <!-- Apply saved sidebar collapse state immediately to avoid layout flicker -->
+        <script>
+            (function () {
+                const sidebar = document.getElementById('sidebar');
+                if (!sidebar) return;
+                const stored = localStorage.getItem('flora_sidebar_collapsed');
+                const shouldCollapse = stored !== null ? stored === 'true' : window.innerWidth < 768;
+                if (shouldCollapse) {
+                    sidebar.classList.add('is-collapsed');
+                }
+            })();
+        </script>
 
         <!-- ================= MAIN CONTENT WRAPPER ================= -->
-        <div class="flex-1 flex flex-col min-h-screen lg:ml-64 main-content">
+        <div class="flex-1 flex flex-col min-h-screen main-content">
 
             <!-- ================= TOP BAR ================= -->
-            <header class="flora-topbar px-5 md:px-8 py-4 flex items-center justify-between sticky top-0 z-20">
-                <div class="flex items-center gap-4">
-                    <!-- Mobile Hamburger Button -->
+            <header class="flora-topbar px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between sticky top-0 z-20">
+                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <!-- Sidebar Collapse / Expand Toggle Button (All Screen Sizes) -->
                     <button type="button"
+                            id="sidebarToggleBtn"
                             onclick="toggleSidebar()"
-                            class="lg:hidden text-[var(--flora-soldier-green)] hover:bg-[var(--flora-bg-subtle)] text-xl p-2 rounded-lg transition"
-                            aria-label="Open navigation menu">
-                        <i class="fa-solid fa-bars"></i>
+                            class="text-[var(--flora-soldier-green)] hover:bg-[var(--flora-berry-good)]/45 border border-[var(--flora-border-subtle)] text-base w-9 h-9 rounded-xl flex items-center justify-center transition shrink-0"
+                            title="Toggle sidebar"
+                            aria-label="Toggle sidebar"
+                            aria-expanded="true">
+                        <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i>
                     </button>
 
-                    <h2 class="text-lg font-bold text-[var(--flora-soldier-green)] tracking-tight">
+                    <h1 class="text-xl font-bold text-[var(--flora-soldier-green)] tracking-tight truncate">
                         @yield('page-heading', 'Dashboard')
-                    </h2>
+                    </h1>
                 </div>
 
-                <!-- Admin Information & Actions -->
-                <div class="flex items-center gap-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 rounded-full bg-[var(--flora-berry-good)]/70 text-[var(--flora-soldier-green)] border border-[var(--flora-border-subtle)]
-                                    flex items-center justify-center text-base">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <span class="text-sm font-semibold text-[var(--flora-soldier-green)] hidden sm:inline">
-                            {{ session('admin_username', 'Administrator') }}
-                        </span>
-                    </div>
+                <!-- Admin Info & Single Icon-Only Logout Button -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <span class="text-sm font-semibold text-[var(--flora-soldier-green)] hidden sm:inline">
+                        {{ session('admin_username', 'Administrator') }}
+                    </span>
 
-                    <!-- Logout Button -->
                     <form action="{{ route('admin.logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit"
-                                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-[var(--flora-soldier-green)] bg-[var(--flora-bg-surface-elevated)] hover:bg-[var(--flora-status-danger-bg)] hover:text-[var(--flora-status-danger-text)] border border-[var(--flora-border-subtle)] hover:border-[var(--flora-status-danger-border)] transition"
-                                title="Log out">
+                                data-tooltip="Logout"
+                                title="Logout"
+                                aria-label="Logout"
+                                class="flora-icon-tooltip w-9 h-9 rounded-xl inline-flex items-center justify-center text-sm text-[var(--flora-soldier-green)] bg-[var(--flora-bg-surface-elevated)] hover:bg-[var(--flora-status-danger-bg)] hover:text-[var(--flora-status-danger-text)] border border-[var(--flora-border-subtle)] hover:border-[var(--flora-status-danger-border)] transition">
                             <i class="fa-solid fa-right-from-bracket"></i>
-                            <span class="hidden md:inline">Logout</span>
                         </button>
                     </form>
                 </div>
             </header>
 
-            <!-- ================= PAGE CONTENT ================= -->
-            <main class="flex-1 p-5 md:p-8">
+            <!-- ================= TOAST NOTIFICATIONS ================= -->
+            <x-toast-container />
 
-                <!-- Success Message -->
-                @if(session('success'))
-                    <div class="mb-6 bg-[var(--flora-status-success-bg)] border border-[var(--flora-status-success-border)] text-[var(--flora-status-success-text)] px-5 py-4 rounded-xl flex items-center justify-between gap-4"
-                         role="status">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-lg shrink-0"></i>
-                            <p class="text-sm font-medium">
-                                {{ session('success') }}
-                            </p>
+            <!-- ================= PAGE CONTENT WITH BLURRED BACKGROUND ================= -->
+            <main class="flora-main-area flex-1 p-5 md:p-8">
+
+                @include('layouts.partials.blurred-background', ['scope' => 'main'])
+
+                <div class="relative z-10 flora-page-enter">
+                    <!-- Inline Validation Errors (Form Feedback) -->
+                    @if($errors->any())
+                        <div class="mb-6 bg-[var(--flora-status-danger-bg)] border border-[var(--flora-status-danger-border)] text-[var(--flora-status-danger-text)] px-5 py-4 rounded-xl"
+                             role="alert">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fa-solid fa-circle-exclamation text-lg shrink-0"></i>
+                                <p class="font-semibold text-sm">
+                                    Please correct the following errors:
+                                </p>
+                            </div>
+                            <ul class="list-disc list-inside text-sm space-y-1 ml-7">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <button type="button"
-                                onclick="this.parentElement.remove()"
-                                class="p-1 text-sm opacity-75 hover:opacity-100"
-                                aria-label="Close notification">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                @endif
+                    @endif
 
-                <!-- General Error Message -->
-                @if(session('error'))
-                    <div class="mb-6 bg-[var(--flora-status-danger-bg)] border border-[var(--flora-status-danger-border)] text-[var(--flora-status-danger-text)] px-5 py-4 rounded-xl flex items-center justify-between gap-4"
-                         role="alert">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-exclamation text-lg shrink-0"></i>
-                            <p class="text-sm font-medium">
-                                {{ session('error') }}
-                            </p>
-                        </div>
-                        <button type="button"
-                                onclick="this.parentElement.remove()"
-                                class="p-1 text-sm opacity-75 hover:opacity-100"
-                                aria-label="Close notification">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                @endif
-
-                <!-- Validation Errors Message -->
-                @if($errors->any())
-                    <div class="mb-6 bg-[var(--flora-status-danger-bg)] border border-[var(--flora-status-danger-border)] text-[var(--flora-status-danger-text)] px-5 py-4 rounded-xl"
-                         role="alert">
-                        <div class="flex items-center gap-3 mb-2">
-                            <i class="fa-solid fa-circle-exclamation text-lg shrink-0"></i>
-                            <p class="font-semibold text-sm">
-                                Please correct the following errors:
-                            </p>
-                        </div>
-                        <ul class="list-disc list-inside text-sm space-y-1 ml-7">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <!-- Yielded Content of Individual Pages -->
-                @yield('content')
+                    @yield('content')
+                </div>
 
             </main>
 
             <!-- ================= FOOTER ================= -->
-            <footer class="flora-footer px-8 py-4 text-center text-xs">
+            <footer class="flora-footer px-8 py-4 text-center text-xs relative z-10">
                 &copy; {{ date('Y') }} Flora Shop Management
             </footer>
 
@@ -217,14 +202,28 @@
 
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- ================= SIDEBAR TOGGLE SCRIPT ================= -->
     <script>
+        function syncSidebarToggleButton() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggleBtn');
+            if (!sidebar || !toggleBtn) return;
+
+            const isCollapsed = sidebar.classList.contains('is-collapsed');
+            toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        }
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
+            if (!sidebar) return;
+
+            sidebar.classList.toggle('is-collapsed');
+            const isCollapsed = sidebar.classList.contains('is-collapsed');
+            localStorage.setItem('flora_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+            syncSidebarToggleButton();
         }
+
+        document.addEventListener('DOMContentLoaded', syncSidebarToggleButton);
     </script>
 
     @stack('scripts')

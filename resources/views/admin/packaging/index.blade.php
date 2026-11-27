@@ -5,25 +5,22 @@
 
 @section('content')
 
-    <!-- Page Header -->
-    <x-page-header title="Packaging Options">
-        <x-slot:actions>
+    <!-- Packaging Options Card -->
+    <x-card>
+        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
+                    Inventory
+                </h2>
+                <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
+                    {{ $packagingOptions->total() }} {{ \Illuminate\Support\Str::plural('item', $packagingOptions->total()) }}
+                </span>
+            </div>
+
             <x-button href="{{ route('admin.packaging.create') }}" variant="primary">
                 <i class="fa-solid fa-plus"></i>
                 <span>Add Packaging Option</span>
             </x-button>
-        </x-slot:actions>
-    </x-page-header>
-
-    <!-- Packaging Options Card -->
-    <x-card>
-        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex items-center justify-between gap-3">
-            <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
-                Inventory
-            </h2>
-            <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
-                {{ $packagingOptions->total() }} {{ \Illuminate\Support\Str::plural('item', $packagingOptions->total()) }}
-            </span>
         </div>
 
         @if($packagingOptions->count() > 0)

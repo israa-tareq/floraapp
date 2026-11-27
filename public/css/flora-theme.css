@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Flora App — Visual Identity & Design System Tokens
+   Flora App — Visual Identity, Layout, Animations & Design Tokens
    ========================================================================== */
 
 :root {
@@ -13,7 +13,7 @@
     /* Semantic Surface & Contrast Tokens derived from the core palette */
     --flora-bg-canvas: var(--flora-warm-fog);
     --flora-bg-surface: #F7F3EE;
-    --flora-bg-surface-elevated: #FAF7F3;
+    --flora-bg-surface-elevated: rgba(250, 247, 243, 0.94);
     --flora-bg-subtle: #EFE8E0;
     --flora-bg-highlight: rgba(236, 196, 195, 0.35);
 
@@ -30,26 +30,28 @@
     --flora-accent-secondary: var(--flora-meadow-mauve);
     --flora-accent-soft: var(--flora-berry-good);
 
-    /* Status Tokens (aligned with botanical palette + accessible contrast) */
-    --flora-status-success-bg: rgba(146, 142, 94, 0.16);
-    --flora-status-success-border: rgba(87, 85, 39, 0.30);
+    /* Status Tokens */
+    --flora-status-success-bg: #ECEEE4;
+    --flora-status-success-border: rgba(87, 85, 39, 0.32);
     --flora-status-success-text: var(--flora-soldier-green);
 
-    --flora-status-warning-bg: rgba(236, 196, 195, 0.42);
-    --flora-status-warning-border: rgba(185, 125, 123, 0.45);
+    --flora-status-warning-bg: #F6E4E2;
+    --flora-status-warning-border: rgba(185, 125, 123, 0.50);
     --flora-status-warning-text: #6E3A38;
 
-    --flora-status-danger-bg: rgba(185, 125, 123, 0.20);
-    --flora-status-danger-border: rgba(163, 103, 101, 0.45);
+    --flora-status-danger-bg: #F3D9D8;
+    --flora-status-danger-border: rgba(163, 103, 101, 0.55);
     --flora-status-danger-text: #6B2D2B;
 
     /* Typography */
     --flora-font-family: 'Lora', Georgia, 'Times New Roman', serif;
 
-    /* Elevation & Radii */
-    --flora-shadow-card: 0 2px 10px rgba(87, 85, 39, 0.06);
-    --flora-shadow-elevated: 0 18px 40px rgba(87, 85, 39, 0.16);
+    /* Elevation & Motion */
+    --flora-shadow-card: 0 4px 16px rgba(87, 85, 39, 0.08);
+    --flora-shadow-card-hover: 0 12px 28px rgba(87, 85, 39, 0.14);
+    --flora-shadow-elevated: 0 22px 48px rgba(87, 85, 39, 0.20);
     --flora-focus-ring: 0 0 0 3px rgba(185, 125, 123, 0.35);
+    --flora-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Consistent Typography Across All Controls */
@@ -89,23 +91,95 @@ textarea:focus-visible {
     outline-offset: 2px;
 }
 
-/* Shared Surface & Card Styling */
+/* ==========================================================================
+   Shared Surfaces, Cards & Subtle Motion
+   ========================================================================== */
+
 .flora-card {
     background-color: var(--flora-bg-surface-elevated);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--flora-border-subtle);
     box-shadow: var(--flora-shadow-card);
     border-radius: 1rem;
+    transition: box-shadow 0.22s var(--flora-ease), border-color 0.22s var(--flora-ease), transform 0.22s var(--flora-ease);
 }
 
-/* Shared Sidebar Navigation */
+.flora-card-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--flora-shadow-card-hover);
+    border-color: rgba(185, 125, 123, 0.55);
+}
+
+.flora-page-enter {
+    animation: floraFadeUp 0.28s var(--flora-ease) both;
+}
+
+@keyframes floraFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Collapsible Sidebar & Top Header
+   ========================================================================== */
+
 .flora-sidebar {
+    width: 16rem;
     background-color: var(--flora-bg-surface);
     border-right: 1px solid var(--flora-border-subtle);
+    box-shadow: 2px 0 14px rgba(87, 85, 39, 0.05);
+    transition: width 0.24s var(--flora-ease);
+}
+
+.flora-sidebar.is-collapsed {
+    width: 4.75rem;
+}
+
+.flora-sidebar.is-collapsed nav {
+    overflow: visible;
+}
+
+.flora-sidebar .sidebar-label,
+.flora-sidebar .sidebar-brand-text,
+.flora-sidebar .sidebar-section-title,
+.flora-sidebar .sidebar-user-meta {
+    transition: opacity 0.16s var(--flora-ease);
+    white-space: nowrap;
+}
+
+.flora-sidebar.is-collapsed .sidebar-label,
+.flora-sidebar.is-collapsed .sidebar-brand-text,
+.flora-sidebar.is-collapsed .sidebar-section-title,
+.flora-sidebar.is-collapsed .sidebar-user-meta {
+    display: none;
+}
+
+.flora-sidebar.is-collapsed .sidebar-brand-wrap {
+    justify-content: center;
+    padding-inline: 0.75rem;
+}
+
+.flora-sidebar.is-collapsed .sidebar-link {
+    justify-content: center;
+    padding-inline: 0.75rem;
+}
+
+.flora-sidebar.is-collapsed .sidebar-footer-wrap {
+    justify-content: center;
+    padding-inline: 0.75rem;
 }
 
 .flora-topbar {
     background-color: var(--flora-bg-surface);
     border-bottom: 1px solid var(--flora-border-subtle);
+    box-shadow: 0 2px 10px rgba(87, 85, 39, 0.04);
 }
 
 .flora-footer {
@@ -115,18 +189,24 @@ textarea:focus-visible {
 }
 
 .sidebar-link {
+    position: relative;
     color: var(--flora-text-muted);
     border-left: 3px solid transparent;
-    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    transition: background-color 0.18s var(--flora-ease), color 0.18s var(--flora-ease), border-color 0.18s var(--flora-ease), transform 0.18s var(--flora-ease);
 }
 
 .sidebar-link:hover {
-    background-color: rgba(236, 196, 195, 0.35);
+    background-color: rgba(236, 196, 195, 0.38);
     color: var(--flora-soldier-green);
+    transform: translateX(2px);
+}
+
+.flora-sidebar.is-collapsed .sidebar-link:hover {
+    transform: none;
 }
 
 .sidebar-link.active {
-    background-color: rgba(236, 196, 195, 0.65);
+    background-color: rgba(236, 196, 195, 0.68);
     border-left-color: var(--flora-usukoubai);
     color: var(--flora-soldier-green);
     font-weight: 600;
@@ -136,17 +216,108 @@ textarea:focus-visible {
     color: var(--flora-soldier-green);
 }
 
-/* Shared Form Controls */
+/* Tooltips when sidebar is collapsed (and on icon-only header buttons) */
+.flora-sidebar.is-collapsed .sidebar-link[data-tooltip]:hover::after,
+.flora-sidebar.is-collapsed .sidebar-link[data-tooltip]:focus-visible::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--flora-soldier-green);
+    color: var(--flora-text-on-accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.38rem 0.7rem;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(87, 85, 39, 0.22);
+    z-index: 60;
+    pointer-events: none;
+}
+
+.flora-icon-tooltip {
+    position: relative;
+}
+
+.flora-icon-tooltip[data-tooltip]:hover::after,
+.flora-icon-tooltip[data-tooltip]:focus-visible::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: var(--flora-soldier-green);
+    color: var(--flora-text-on-accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.32rem 0.65rem;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(87, 85, 39, 0.22);
+    z-index: 60;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Main Content Area Blurred Background
+   ========================================================================== */
+
+.flora-main-area {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.flora-main-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.flora-main-bg-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.flora-main-bg-image {
+    position: absolute;
+    inset: -20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px);
+    transform: scale(1.04);
+}
+
+.flora-main-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        155deg,
+        rgba(221, 211, 201, 0.78) 0%,
+        rgba(247, 243, 238, 0.72) 55%,
+        rgba(236, 196, 195, 0.48) 100%
+    );
+}
+
+/* ==========================================================================
+   Shared Form Controls & Tables
+   ========================================================================== */
+
 .flora-input {
     width: 100%;
-    background-color: #FFFDFB;
+    background-color: rgba(255, 253, 251, 0.92);
     color: var(--flora-text-primary);
     border: 1px solid var(--flora-border-strong);
     border-radius: 0.75rem;
     padding: 0.7rem 0.95rem;
     font-size: 0.925rem;
     line-height: 1.45;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    transition: border-color 0.18s var(--flora-ease), box-shadow 0.18s var(--flora-ease), background-color 0.18s var(--flora-ease);
 }
 
 .flora-input::placeholder {
@@ -155,6 +326,7 @@ textarea:focus-visible {
 
 .flora-input:focus {
     outline: none;
+    background-color: #FFFDFB;
     border-color: var(--flora-usukoubai);
     box-shadow: var(--flora-focus-ring);
 }
@@ -174,13 +346,13 @@ textarea:focus-visible {
 
 .flora-file-input {
     width: 100%;
-    background-color: #FFFDFB;
+    background-color: rgba(255, 253, 251, 0.92);
     color: var(--flora-text-primary);
     border: 1px dashed var(--flora-border-strong);
     border-radius: 0.75rem;
     padding: 0.65rem 0.95rem;
     font-size: 0.875rem;
-    transition: border-color 0.18s ease;
+    transition: border-color 0.18s var(--flora-ease);
 }
 
 .flora-file-input:hover {
@@ -197,7 +369,7 @@ textarea:focus-visible {
     font-weight: 600;
     font-size: 0.8125rem;
     cursor: pointer;
-    transition: background-color 0.18s ease;
+    transition: background-color 0.18s var(--flora-ease), color 0.18s var(--flora-ease);
 }
 
 .flora-file-input::file-selector-button:hover {
@@ -205,9 +377,8 @@ textarea:focus-visible {
     color: var(--flora-text-on-accent);
 }
 
-/* Shared Table Styling */
 .flora-table-head {
-    background-color: var(--flora-bg-subtle);
+    background-color: rgba(239, 232, 224, 0.90);
     border-bottom: 1px solid var(--flora-border-subtle);
 }
 
@@ -221,7 +392,7 @@ textarea:focus-visible {
 
 .flora-table-body tr {
     border-bottom: 1px solid var(--flora-border-subtle);
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s var(--flora-ease);
 }
 
 .flora-table-body tr:last-child {
@@ -229,17 +400,19 @@ textarea:focus-visible {
 }
 
 .flora-table-body tr:hover {
-    background-color: rgba(236, 196, 195, 0.16);
+    background-color: rgba(236, 196, 195, 0.20);
 }
 
-/* Transparent PNG Logo */
+/* ==========================================================================
+   Transparent PNG Logo & Login Page Glass Card
+   ========================================================================== */
+
 .flora-app-logo {
     background: transparent;
     display: block;
     object-fit: contain;
 }
 
-/* Login Full-Screen Blurred Background */
 .flora-login-bg-wrapper {
     position: fixed;
     inset: 0;
@@ -254,8 +427,8 @@ textarea:focus-visible {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(10px);
-    transform: scale(1.06);
+    filter: blur(8px);
+    transform: scale(1.05);
 }
 
 .flora-login-bg-placeholder {
@@ -273,20 +446,178 @@ textarea:focus-visible {
     inset: 0;
     background: linear-gradient(
         145deg,
-        rgba(221, 211, 201, 0.56) 0%,
+        rgba(221, 211, 201, 0.42) 0%,
         rgba(87, 85, 39, 0.24) 100%
     );
 }
 
+/* Stronger frosted glass card over softer blurred background */
 .flora-login-card {
-    background-color: rgba(250, 247, 243, 0.94);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(87, 85, 39, 0.18);
+    background-color: rgba(247, 243, 238, 0.56);
+    backdrop-filter: blur(22px) saturate(135%);
+    -webkit-backdrop-filter: blur(22px) saturate(135%);
+    border: 1px solid rgba(250, 247, 243, 0.65);
     box-shadow: var(--flora-shadow-elevated);
-    border-radius: 1.25rem;
+    border-radius: 1.35rem;
+    animation: floraFadeUp 0.34s var(--flora-ease) both;
+}
+
+.flora-captcha-box {
+    background-color: rgba(255, 253, 251, 0.74);
+    border: 1px solid var(--flora-border-strong);
+    border-radius: 0.75rem;
+    transition: border-color 0.18s var(--flora-ease), background-color 0.18s var(--flora-ease);
+}
+
+.flora-captcha-box:hover {
+    border-color: var(--flora-usukoubai);
+    background-color: rgba(255, 253, 251, 0.88);
+}
+
+.flora-oauth-btn {
+    background-color: rgba(255, 253, 251, 0.84);
+    color: var(--flora-soldier-green);
+    border: 1px solid var(--flora-border-strong);
+    border-radius: 0.75rem;
+    transition: background-color 0.18s var(--flora-ease), border-color 0.18s var(--flora-ease), transform 0.18s var(--flora-ease);
+}
+
+.flora-oauth-btn:hover {
+    background-color: rgba(236, 196, 195, 0.45);
+    border-color: var(--flora-usukoubai);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Chart Animations
+   ========================================================================== */
+
+.flora-bar-fill {
+    transform-origin: left center;
+    animation: floraBarGrow 0.6s var(--flora-ease) both;
+}
+
+@keyframes floraBarGrow {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.flora-column-fill {
+    transform-origin: bottom center;
+    animation: floraColumnGrow 0.55s var(--flora-ease) both;
+}
+
+@keyframes floraColumnGrow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.flora-trend-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: floraLineDraw 0.9s var(--flora-ease) forwards;
+}
+
+@keyframes floraLineDraw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ==========================================================================
+   Toast Notifications (Slide-in, 5s auto-dismiss)
+   ========================================================================== */
+
+.flora-toast {
+    border-radius: 0.9rem;
+    padding: 0.85rem 1rem 0.65rem;
+    box-shadow: 0 14px 32px rgba(87, 85, 39, 0.22);
+    border: 1px solid transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateX(115%);
+    transition: transform 0.28s var(--flora-ease), opacity 0.28s var(--flora-ease);
+    overflow: hidden;
+}
+
+.flora-toast.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.flora-toast.is-leaving {
+    opacity: 0;
+    transform: translateX(115%);
+}
+
+.flora-toast--success {
+    background-color: rgba(236, 238, 228, 0.97);
+    border-color: var(--flora-status-success-border);
+    color: var(--flora-status-success-text);
+}
+
+.flora-toast--warning {
+    background-color: rgba(246, 228, 226, 0.97);
+    border-color: var(--flora-status-warning-border);
+    color: var(--flora-status-warning-text);
+}
+
+.flora-toast--error {
+    background-color: rgba(243, 217, 216, 0.97);
+    border-color: var(--flora-status-danger-border);
+    color: var(--flora-status-danger-text);
+}
+
+.flora-toast-close:hover {
+    background-color: rgba(87, 85, 39, 0.12);
+}
+
+.flora-toast-progress {
+    height: 3px;
+    width: 100%;
+    background-color: rgba(87, 85, 39, 0.12);
+    border-radius: 999px;
+    margin-top: 0.65rem;
+    overflow: hidden;
+}
+
+.flora-toast-progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: currentColor;
+    opacity: 0.55;
 }
 
 .main-content {
     min-width: 0;
+}
+
+/* ==========================================================================
+   Reduced Motion Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .flora-card-interactive:hover,
+    .sidebar-link:hover,
+    .flora-oauth-btn:hover {
+        transform: none;
+    }
 }

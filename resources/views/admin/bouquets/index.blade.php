@@ -5,25 +5,22 @@
 
 @section('content')
 
-    <!-- Page Header -->
-    <x-page-header title="Pre-Made Bouquets">
-        <x-slot:actions>
+    <!-- Bouquets Table Card -->
+    <x-card>
+        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
+                    Inventory
+                </h2>
+                <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
+                    {{ $bouquets->total() }} {{ \Illuminate\Support\Str::plural('item', $bouquets->total()) }}
+                </span>
+            </div>
+
             <x-button href="{{ route('admin.bouquets.create') }}" variant="primary">
                 <i class="fa-solid fa-plus"></i>
                 <span>Add Bouquet</span>
             </x-button>
-        </x-slot:actions>
-    </x-page-header>
-
-    <!-- Bouquets Table Card -->
-    <x-card>
-        <div class="px-6 py-4 border-b border-[var(--flora-border-subtle)] flex items-center justify-between gap-3">
-            <h2 class="text-base font-bold text-[var(--flora-soldier-green)]">
-                Inventory
-            </h2>
-            <span class="text-xs font-semibold text-[var(--flora-text-muted)]">
-                {{ $bouquets->total() }} {{ \Illuminate\Support\Str::plural('item', $bouquets->total()) }}
-            </span>
         </div>
 
         @if($bouquets->count() > 0)

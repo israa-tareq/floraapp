@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FlowerController;
 use App\Http\Controllers\Admin\PreMadeBouquetController;
 use App\Http\Controllers\Admin\PackagingOptionController;
+use App\Http\Controllers\Admin\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,5 +103,18 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
 
     Route::resource('packaging', PackagingOptionController::class)
         ->except(['show']);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sales & Statistics Management
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('sales', SaleController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    Route::patch('sales/{sale}/status', [SaleController::class, 'updateStatus'])
+        ->name('sales.status');
 
 });
